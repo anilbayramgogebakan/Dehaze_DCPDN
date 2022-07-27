@@ -1,0 +1,29 @@
+# 0. Check existing environments
+conda info --envs
+
+# 1. Create new environment with desired Python version
+conda create -n myenv python=3.9
+
+# 2. Install torch, torchvision and torchaudio with pip. Related website is "https://pytorch.org/get-started/locally/". (No need to install audio!)
+pip3 install torch torchvision torchaudio
+
+# 3. At this point, cuda compatability should be checked. Open python console and write commands below.
+python
+
+>>> import torch
+>>> torch.cuda.is_available()
+True
+>>> torch.cuda.device_count()
+1
+>>> torch.cuda.device(0)
+<torch.cuda.device object at 0x7f37078658b0>
+>>> torch.cuda.get_device_name(0)
+'NVIDIA GeForce GTX 1050'  # Depends on GPU
+>>> exit()
+
+# 4. Instal dependencies
+pip install scipy
+pip install opencv-python
+
+
+
