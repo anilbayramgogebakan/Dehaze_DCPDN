@@ -1,8 +1,11 @@
 # 0. Check existing environments
 conda info --envs
 
-# 1. Create new environment with desired Python version
+# 1. Create new environment with desired Python version ('myenv' is name of the new environment, can be changed)
 conda create -n myenv python=3.9
+
+# 1.5. Activate new environment 
+conda activate myenv
 
 # 2. Install torch, torchvision and torchaudio with pip. Related website is "https://pytorch.org/get-started/locally/". (No need to install audio!)
 pip3 install torch torchvision torchaudio

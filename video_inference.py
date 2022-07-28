@@ -22,7 +22,7 @@ import cv2
 
 # Choose an image to pass through the model
 test_image = '/home/anilbayramg/Desktop/Github-desktop/my-DCPDN/result_cvpr18/my_image/foggyHouse.jpg'
-video_path = "/home/anilbayramg/Desktop/Github-desktop/my-DCPDN/demo-inp/very-short.mp4"
+video_path = "/home/anilbayramg/Desktop/Github-desktop/Dehaze_DCPDN/demo-inp/very-short.mp4"
 
 data_transform = transforms.Compose([transforms.Resize((512, 512)), transforms.ToTensor()])
 
@@ -36,7 +36,7 @@ cap = cv2.VideoCapture(video_path)
 HEIGHT = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 WIDTH = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 FPS = int(cap.get(cv2.CAP_PROP_FPS))
-out = cv2.VideoWriter("/home/anilbayramg/Desktop/Github-desktop/my-DCPDN/demo-out/bayram.avi",cv2.VideoWriter_fourcc(*"MJPG"), FPS, (WIDTH,HEIGHT))
+out = cv2.VideoWriter("/home/yns/Downloads/Dehaze_DCPDN/demo-out/bayram.avi",cv2.VideoWriter_fourcc(*"MJPG"), FPS, (WIDTH,HEIGHT))
 
 print("Video has been opened.")
 i = 0
@@ -59,7 +59,6 @@ while cap.isOpened():
     frame = frame.unsqueeze(0).cuda() # For GPU
 #    torch.cuda.synchronize() 
 #    pre_pro += time.time()
-    
     out_frame , _, _, _ = netG(frame)
 #    torch.cuda.synchronize() 
 #    inference += time.time()

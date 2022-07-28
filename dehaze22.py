@@ -593,12 +593,10 @@ class dehaze(nn.Module):
 
 
     dehaze=torch.cat([dehaze,x],1)
-    ###--------------------------------
     # dehaze=dehaze/(tran+(10**-10))
     # dehaze=self.relu(self.batch1(self.refine1(dehaze)))
     # dehaze=self.relu(self.batch1(self.refine2(dehaze)))
-    ###--------------------------------
-    
+
     dehaze=self.relu((self.refine1(dehaze)))
     dehaze=self.relu((self.refine2(dehaze)))
     shape_out = dehaze.data.size()
