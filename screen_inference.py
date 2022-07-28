@@ -3,7 +3,7 @@ import cv2
 from mss import mss
 import torch
 import dehaze22  as net
-
+import time
 
 print("Model is loading...")
 netG = net.dehaze(3, 3, 64)
@@ -17,8 +17,19 @@ print("Press 'q' to quit.")
 
 bounding_box = {'top': 100, 'left': 100, 'width': 512, 'height': 512}
 sct = mss()
+#%% For FPS calculation
+
+start = 0
+finish = 0
+i = 0
+## For FPS calculation
+
+#%%
 
 while True:
+    torch.cuda.synchronize() 
+    start += time.time()
+    
     sct_img = sct.grab(bounding_box) #take the screenshot
     
     np_frame = np.array(sct_img)[:,:,0:3].T   # convert it to numpy array
@@ -33,7 +44,18 @@ while True:
         show = out_frame[0].cpu().permute(2,1,0)
         
         cv2.imshow('screen', np.array(show))
-
+    
+    torch.cuda.synchronize() 
+    finish += time.time()
     if (cv2.waitKey(1) & 0xFF) == ord('q'):
         cv2.destroyAllWindows()
         break
+    #%% For FPS calculation
+    i += 1
+    if i % 30 == 0:
+        print("FPS: {}".format(1/((finish-start)/30)))
+        start = 0
+        finish = 0
+    
+    ## For FPS calculation
+
